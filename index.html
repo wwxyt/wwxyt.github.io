@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>wwxyt - GitHub Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #21262d;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-glow: rgba(88, 166, 255, 0.15);
+      --green: #3fb950;
+      --purple: #bc8cff;
+      --orange: #f78166;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Background decoration */
+    .bg-decoration {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .bg-decoration::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(88,166,255,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .bg-decoration::after {
+      content: '';
+      position: absolute;
+      bottom: -150px; left: -150px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(188,140,255,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header / Profile */
+    .profile-header {
+      text-align: center;
+      padding: 48px 0 56px;
+      animation: fadeInUp 0.7s ease-out;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 24px;
+    }
+    .avatar-ring {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      z-index: -1;
+      opacity: 0.8;
+      animation: pulse-ring 3s ease-in-out infinite;
+    }
+    .avatar {
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      border: 3px solid var(--bg-primary);
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .avatar:hover { transform: scale(1.05); }
+
+    .profile-name {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .profile-handle {
+      font-size: 1.15rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 16px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .profile-bio {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+
+    .profile-links {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .btn-link:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(88,166,255,0.25);
+    }
+    .btn-link svg { flex-shrink: 0; }
+
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+      animation: fadeInUp 0.7s ease-out 0.15s both;
+    }
+    .stat-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+
+    /* Section */
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title svg { color: var(--accent); }
+
+    /* Repos */
+    .repos-section {
+      animation: fadeInUp 0.7s ease-out 0.3s both;
+    }
+    .repo-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 26px;
+      margin-bottom: 18px;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+    .repo-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    }
+    .repo-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+    .repo-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .repo-name:hover { text-decoration: underline; }
+    .repo-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid;
+      flex-shrink: 0;
+    }
+    .badge-public {
+      color: var(--green);
+      border-color: rgba(63,185,80,0.3);
+      background: rgba(63,185,80,0.08);
+    }
+    .repo-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .repo-meta {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .meta-item svg { flex-shrink: 0; opacity: 0.75; }
+
+    /* Language dot */
+    .lang-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .lang-python { background: #3572A5; }
+    .lang-js { background: #f1e05a; }
+    .lang-ts { background: #3178c6; }
+    .lang-java { background: #b07219; }
+    .lang-cpp { background: #f34b7d; }
+    .lang-default { background: var(--text-muted); }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 0 20px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      animation: fadeInUp 0.7s ease-out 0.45s both;
+    }
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.02); }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container { padding: 32px 16px; }
+      .profile-name { font-size: 1.7rem; }
+      .avatar { width: 96px; height: 96px; }
+      .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .stat-number { font-size: 1.4rem; }
+      .stat-card { padding: 16px 12px; }
+      .repo-card { padding: 20px; }
+      .repo-meta { gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-decoration"></div>
+
+<div class="container">
+
+  <!-- Profile Header -->
+  <header class="profile-header">
+    <div class="avatar-wrapper">
+      <div class="avatar-ring"></div>
+      <img
+        class="avatar"
+        src="https://avatars.githubusercontent.com/u/165013181?v=4"
+        alt="wwxyt avatar"
+        onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><rect fill=%22%2321262d%22 width=%22128%22 height=%22128%22 rx=%2264%22/><text x=%2264%22 y=%2272%22 text-anchor=%22middle%22 fill=%22%2358a6ff%22 font-size=%2240%22 font-family=%22sans-serif%22>W</text></svg>'"
+      >
+    </div>
+    <h1 class="profile-name">wwxyt</h1>
+    <div class="profile-handle">@wwxyt</div>
+    <p class="profile-bio">
+      热爱编程与算法，正在 LeetCode Hot100 路上稳步前行。
+      喜欢用代码解决问题，持续学习，持续进步。
+    </p>
+    <div class="profile-links">
+      <a class="btn-link" href="https://github.com/wwxyt" target="_blank" rel="noopener">
+        <!-- GitHub Icon -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        访问 GitHub
+      </a>
+    </div>
+  </header>
+
+  <!-- Stats -->
+  <section class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">1</div>
+      <div class="stat-label">仓库</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">0</div>
+      <div class="stat-label">粉丝</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">0</div>
+      <div class="stat-label">关注</div>
+    </div>
+  </section>
+
+  <!-- Repositories -->
+  <section class="repos-section">
+    <h2 class="section-title">
+      <!-- Repo Icon -->
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      项目仓库
+    </h2>
+
+    <!-- Repo Card: Leetcode_Hot100_Personalnote -->
+    <article class="repo-card">
+      <div class="repo-header">
+        <a class="repo-name" href="https://github.com/wwxyt/Leetcode_Hot100_Personalnote" target="_blank" rel="noopener">
+          <!-- Code Icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Leetcode_Hot100_Personalnote
+        </a>
+        <span class="repo-badge badge-public">Public</span>
+      </div>
+      <p class="repo-desc">LeetCode Hot100 题目练习笔记 — ACM 风格训练的个人解题记录，包含思路分析与代码实现。</p>
+      <div class="repo-meta">
+        <span class="meta-item">
+          <!-- Star Icon -->
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          0
+        </span>
+        <span class="meta-item">
+          <!-- Fork Icon -->
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 9v2c0 .9.7 1.7 1.5 1.9L10 13.5"/><path d="M18 9v2a1.93 1.93 0 0 1-1.5 1.9L14 13.5"/></svg>
+          0
+        </span>
+        <span class="meta-item">
+          <span class="lang-dot lang-default"></span>
+          Markdown &amp; Code
+        </span>
+      </div>
+    </article>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>Made with ❤️ · Powered by GitHub API</p>
+    <p style="margin-top: 6px;">© 2026 wwxyt</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
