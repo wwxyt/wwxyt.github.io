@@ -6,271 +6,472 @@
   <title>wwxyt - GitHub Profile</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-primary: #0d1117;
-      --bg-secondary: #161b22;
-      --bg-card: #21262d;
-      --border: #30363d;
-      --text-primary: #e6edf3;
-      --text-secondary: #8b949e;
-      --text-muted: #6e7681;
-      --accent: #58a6ff;
-      --accent-glow: rgba(88, 166, 255, 0.15);
-      --green: #3fb950;
-      --purple: #bc8cff;
-      --orange: #f78166;
+      --bg-deep: #0f0b09;
+      --bg-primary: #17110e;
+      --bg-card: rgba(38, 28, 22, 0.65);
+      --bg-card-solid: #261c16;
+      --bg-card-hover: rgba(48, 36, 26, 0.75);
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-accent: rgba(255, 255, 255, 0.1);
+      --text-primary: #f5ece3;
+      --text-secondary: #b8a898;
+      --text-muted: #7a6a5a;
+      --accent: #f59e42;
+      --accent-soft: rgba(245, 158, 66, 0.12);
+      --accent-glow: rgba(245, 158, 66, 0.3);
+      --warm-rose: #e8747a;
+      --warm-gold: #d4a843;
+      --warm-coral: #e8845a;
+      --warm-peach: #f0b890;
+      --warm-blush: rgba(232, 116, 122, 0.08);
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-primary);
+      background: var(--bg-deep);
       color: var(--text-primary);
       min-height: 100vh;
-      line-height: 1.6;
+      line-height: 1.7;
+      overflow-x: hidden;
     }
 
-    /* Background decoration */
-    .bg-decoration {
+    /* ─── Ambient Background ─── */
+    .ambient-bg {
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
+      inset: 0;
       pointer-events: none;
-      overflow: hidden;
       z-index: 0;
+      overflow: hidden;
     }
-    .bg-decoration::before {
-      content: '';
+    .ambient-orb {
       position: absolute;
-      top: -200px; right: -200px;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(88,166,255,0.08) 0%, transparent 70%);
       border-radius: 50%;
+      filter: blur(100px);
+      animation: float-orb 20s ease-in-out infinite;
     }
-    .bg-decoration::after {
-      content: '';
-      position: absolute;
-      bottom: -150px; left: -150px;
+    .orb-1 {
+      width: 700px; height: 700px;
+      top: -300px; right: -200px;
+      background: radial-gradient(circle, rgba(245,158,66,0.1) 0%, transparent 70%);
+      animation-delay: 0s;
+    }
+    .orb-2 {
       width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(188,140,255,0.06) 0%, transparent 70%);
-      border-radius: 50%;
+      bottom: -200px; left: -150px;
+      background: radial-gradient(circle, rgba(232,116,122,0.08) 0%, transparent 70%);
+      animation-delay: -7s;
     }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 60px 24px;
-      position: relative;
+    .orb-3 {
+      width: 400px; height: 400px;
+      top: 40%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(212,168,67,0.06) 0%, transparent 70%);
+      animation-delay: -14s;
+    }
+    /* Subtle grain overlay */
+    .grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
       z-index: 1;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
     }
 
-    /* Header / Profile */
-    .profile-header {
-      text-align: center;
-      padding: 48px 0 56px;
-      animation: fadeInUp 0.7s ease-out;
-    }
-
-    .avatar-wrapper {
+    /* ─── Container ─── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 28px 80px;
       position: relative;
-      display: inline-block;
-      margin-bottom: 24px;
+      z-index: 2;
     }
-    .avatar-ring {
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--purple));
-      z-index: -1;
-      opacity: 0.8;
-      animation: pulse-ring 3s ease-in-out infinite;
-    }
-    .avatar {
-      width: 128px;
-      height: 128px;
-      border-radius: 50%;
-      border: 3px solid var(--bg-primary);
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-    .avatar:hover { transform: scale(1.05); }
 
-    .profile-name {
-      font-size: 2.25rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
-      background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+    /* ─── Profile Hero ─── */
+    .profile-hero {
+      text-align: center;
+      padding: 60px 0 48px;
+      animation: hero-enter 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .avatar-container {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+    .avatar-glow {
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        var(--accent),
+        var(--warm-rose),
+        var(--warm-gold),
+        var(--accent)
+      );
+      opacity: 0.35;
+      filter: blur(16px);
+      animation: rotate-glow 8s linear infinite;
+    }
+    .avatar-border {
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        var(--accent),
+        var(--warm-rose),
+        var(--warm-gold),
+        var(--accent)
+      );
+      animation: rotate-glow 8s linear infinite;
+    }
+    .avatar-inner {
+      position: relative;
+      width: 124px;
+      height: 124px;
+      border-radius: 50%;
+      border: 3px solid var(--bg-deep);
+      overflow: hidden;
+      z-index: 1;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .avatar-inner:hover { transform: scale(1.08); }
+    .avatar-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* Online indicator */
+    .online-dot {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #4ade80;
+      border: 3px solid var(--bg-deep);
+      z-index: 2;
+      box-shadow: 0 0 8px rgba(74,222,128,0.5);
+    }
+
+    .hero-name {
+      font-size: 2.6rem;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #ffffff 20%, var(--warm-peach) 60%, var(--accent) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-
-    .profile-handle {
-      font-size: 1.15rem;
+    .hero-handle {
+      font-size: 1rem;
       color: var(--accent);
       font-weight: 500;
-      margin-bottom: 16px;
       font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+      opacity: 0.85;
     }
-
-    .profile-bio {
+    .hero-bio {
       font-size: 1.05rem;
       color: var(--text-secondary);
-      max-width: 520px;
-      margin: 0 auto 28px;
-      line-height: 1.7;
+      max-width: 480px;
+      margin: 0 auto 32px;
+      line-height: 1.85;
+      font-weight: 400;
     }
-
-    .profile-links {
+    .hero-actions {
       display: flex;
-      gap: 12px;
+      gap: 14px;
       justify-content: center;
       flex-wrap: wrap;
     }
-    .btn-link {
+    .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 22px;
-      background: var(--bg-card);
-      color: var(--text-primary);
-      text-decoration: none;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      font-size: 0.92rem;
-      font-weight: 500;
-      transition: all 0.25s ease;
-      cursor: pointer;
-    }
-    .btn-link:hover {
-      background: var(--accent);
+      padding: 12px 28px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--warm-coral) 100%);
       color: #fff;
-      border-color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(88,166,255,0.25);
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 16px rgba(245,158,66,0.2), inset 0 1px 0 rgba(255,255,255,0.15);
     }
-    .btn-link svg { flex-shrink: 0; }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(245,158,66,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .btn-primary svg { flex-shrink: 0; }
 
-    /* Stats */
-    .stats-grid {
+    /* ─── Stats Strip ─── */
+    .stats-strip {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 48px;
-      animation: fadeInUp 0.7s ease-out 0.15s both;
+      gap: 1px;
+      background: var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 52px;
+      animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
     }
-    .stat-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 24px 20px;
+    .stat-item {
+      background: var(--bg-card-solid);
+      padding: 28px 20px;
       text-align: center;
-      transition: all 0.3s ease;
+      transition: background 0.3s ease;
     }
-    .stat-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    .stat-item:hover {
+      background: var(--bg-card-hover);
     }
-    .stat-number {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--accent);
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: 800;
       font-family: 'JetBrains Mono', monospace;
+      background: linear-gradient(135deg, var(--accent), var(--warm-peach));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
     }
-    .stat-label {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
+    .stat-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
       margin-top: 4px;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 500;
+      letter-spacing: 1.5px;
+      font-weight: 600;
     }
 
-    /* Section */
-    .section-title {
-      font-size: 1.35rem;
-      font-weight: 700;
-      margin-bottom: 24px;
+    /* ─── Section Heading ─── */
+    .section {
+      margin-bottom: 44px;
+    }
+    .section-heading {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
     }
-    .section-title svg { color: var(--accent); }
+    .section-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      flex-shrink: 0;
+    }
+    .section-icon svg { color: var(--accent); }
+    .section-label {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .section-count {
+      margin-left: auto;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--glass-bg);
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--glass-border);
+    }
 
-    /* Repos */
-    .repos-section {
-      animation: fadeInUp 0.7s ease-out 0.3s both;
+    /* ─── Project Card ─── */
+    .project-card {
+      position: relative;
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 16px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
     }
-    .repo-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 26px;
-      margin-bottom: 18px;
-      transition: all 0.3s ease;
-      cursor: default;
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(245,158,66,0.04) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
     }
-    .repo-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    .project-card:hover {
+      border-color: rgba(245,158,66,0.2);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(245,158,66,0.08);
     }
-    .repo-header {
+    .project-card:hover::before { opacity: 1; }
+
+    /* Interest card accent line */
+    .project-card.interest::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--warm-gold), var(--warm-rose));
+      border-radius: 0 2px 2px 0;
+    }
+
+    .card-top {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 10px;
+      gap: 12px;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
     }
-    .repo-name {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--accent);
-      text-decoration: none;
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--accent-soft);
       display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-right: 14px;
+    }
+    .card-icon svg { color: var(--accent); }
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      min-width: 0;
+    }
+    .card-name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+      transition: color 0.2s ease;
+      display: inline-flex;
       align-items: center;
       gap: 8px;
     }
-    .repo-name:hover { text-decoration: underline; }
-    .repo-badge {
+    .card-name:hover { color: var(--accent); }
+    .card-name .arrow {
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: all 0.25s ease;
+      color: var(--accent);
+    }
+    .card-name:hover .arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .card-badge {
       display: inline-flex;
       align-items: center;
-      padding: 3px 10px;
+      padding: 4px 12px;
       border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      border: 1px solid;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
       flex-shrink: 0;
+      text-transform: uppercase;
     }
     .badge-public {
-      color: var(--green);
-      border-color: rgba(63,185,80,0.3);
-      background: rgba(63,185,80,0.08);
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid rgba(245,158,66,0.15);
     }
-    .repo-desc {
+    .badge-interest {
+      color: var(--warm-gold);
+      background: rgba(212,168,67,0.1);
+      border: 1px solid rgba(212,168,67,0.15);
+    }
+
+    .card-desc {
       color: var(--text-secondary);
-      font-size: 0.95rem;
-      margin-bottom: 16px;
-      line-height: 1.6;
+      font-size: 0.93rem;
+      margin-bottom: 18px;
+      line-height: 1.75;
+      position: relative;
+      z-index: 1;
     }
-    .repo-meta {
+
+    /* Tags */
+    .tag-row {
       display: flex;
-      gap: 18px;
       flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
     }
-    .meta-item {
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--warm-blush);
+      color: var(--warm-rose);
+      border: 1px solid rgba(232,116,122,0.1);
+      transition: all 0.2s ease;
+    }
+    .tag:hover {
+      background: rgba(232,116,122,0.15);
+      transform: translateY(-1px);
+    }
+
+    /* Card footer meta */
+    .card-footer {
       display: flex;
       align-items: center;
-      gap: 5px;
-      font-size: 0.83rem;
+      gap: 20px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
       color: var(--text-muted);
       font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
     }
-    .meta-item svg { flex-shrink: 0; opacity: 0.75; }
+    .meta-chip svg { flex-shrink: 0; opacity: 0.6; }
 
     /* Language dot */
     .lang-dot {
@@ -281,128 +482,163 @@
       flex-shrink: 0;
     }
     .lang-python { background: #3572A5; }
-    .lang-js { background: #f1e05a; }
-    .lang-ts { background: #3178c6; }
-    .lang-java { background: #b07219; }
-    .lang-cpp { background: #f34b7d; }
+    .lang-html { background: #e34c26; }
     .lang-default { background: var(--text-muted); }
 
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 40px 0 20px;
-      color: var(--text-muted);
-      font-size: 0.82rem;
-      animation: fadeInUp 0.7s ease-out 0.45s both;
-    }
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-    footer a:hover { text-decoration: underline; }
+    /* ─── Stagger Animations ─── */
+    .anim-stagger-1 { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both; }
+    .anim-stagger-2 { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both; }
+    .anim-stagger-3 { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both; }
+    .anim-stagger-4 { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both; }
 
-    /* Animations */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(24px); }
+    /* ─── Keyframes ─── */
+    @keyframes hero-enter {
+      from { opacity: 0; transform: translateY(32px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(28px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes pulse-ring {
-      0%, 100% { opacity: 0.6; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.02); }
+    @keyframes rotate-glow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes float-orb {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -20px) scale(1.05); }
+      66% { transform: translate(-20px, 15px) scale(0.95); }
     }
 
-    /* Responsive */
-    @media (max-width: 600px) {
-      .container { padding: 32px 16px; }
-      .profile-name { font-size: 1.7rem; }
-      .avatar { width: 96px; height: 96px; }
-      .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-      .stat-number { font-size: 1.4rem; }
-      .stat-card { padding: 16px 12px; }
-      .repo-card { padding: 20px; }
-      .repo-meta { gap: 12px; }
+    /* ─── Footer ─── */
+    .site-footer {
+      text-align: center;
+      padding: 48px 0 24px;
+      animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both;
+    }
+    .footer-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      margin: 0 auto 24px;
+      border-radius: 1px;
+    }
+    .footer-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+    .footer-text a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .footer-text a:hover { text-decoration: underline; }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 640px) {
+      .container { padding: 24px 18px 60px; }
+      .profile-hero { padding: 40px 0 36px; }
+      .hero-name { font-size: 2rem; letter-spacing: -1px; }
+      .avatar-inner { width: 100px; height: 100px; }
+      .stats-strip { gap: 1px; }
+      .stat-item { padding: 20px 14px; }
+      .stat-value { font-size: 1.6rem; }
+      .project-card { padding: 22px; }
+      .card-footer { gap: 14px; }
     }
   </style>
 </head>
 <body>
 
-<div class="bg-decoration"></div>
+<!-- Ambient Background -->
+<div class="ambient-bg">
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+  <div class="ambient-orb orb-3"></div>
+</div>
+<div class="grain"></div>
 
 <div class="container">
 
-  <!-- Profile Header -->
-  <header class="profile-header">
-    <div class="avatar-wrapper">
-      <div class="avatar-ring"></div>
-      <img
-        class="avatar"
-        src="https://avatars.githubusercontent.com/u/165013181?v=4"
-        alt="wwxyt avatar"
-        onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><rect fill=%22%2321262d%22 width=%22128%22 height=%22128%22 rx=%2264%22/><text x=%2264%22 y=%2272%22 text-anchor=%22middle%22 fill=%22%2358a6ff%22 font-size=%2240%22 font-family=%22sans-serif%22>W</text></svg>'"
-      >
+  <!-- ───── Profile Hero ───── -->
+  <header class="profile-hero">
+    <div class="avatar-container">
+      <div class="avatar-glow"></div>
+      <div class="avatar-border"></div>
+      <div class="avatar-inner">
+        <img
+          src="https://avatars.githubusercontent.com/u/165013181?v=4"
+          alt="wwxyt"
+          onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><rect fill=%22%2317110e%22 width=%22128%22 height=%22128%22 rx=%2264%22/><text x=%2264%22 y=%2274%22 text-anchor=%22middle%22 fill=%22%23f59e42%22 font-size=%2244%22 font-family=%22sans-serif%22 font-weight=%22bold%22>W</text></svg>'"
+        >
+      </div>
+      <div class="online-dot"></div>
     </div>
-    <h1 class="profile-name">wwxyt</h1>
-    <div class="profile-handle">@wwxyt</div>
-    <p class="profile-bio">
-      热爱编程与算法，正在 LeetCode Hot100 路上稳步前行。
+    <h1 class="hero-name">wwxyt</h1>
+    <p class="hero-handle">@wwxyt</p>
+    <p class="hero-bio">
+      热爱编程与算法，正在 LeetCode Hot100 路上稳步前行。<br>
       喜欢用代码解决问题，持续学习，持续进步。
     </p>
-    <div class="profile-links">
-      <a class="btn-link" href="https://github.com/wwxyt" target="_blank" rel="noopener">
-        <!-- GitHub Icon -->
+    <div class="hero-actions">
+      <a class="btn-primary" href="https://github.com/wwxyt" target="_blank" rel="noopener">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        访问 GitHub
+        GitHub
       </a>
     </div>
   </header>
 
-  <!-- Stats -->
-  <section class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-number">1</div>
-      <div class="stat-label">仓库</div>
+  <!-- ───── Stats Strip ───── -->
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-value">1</div>
+      <div class="stat-text">Repositories</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-number">0</div>
-      <div class="stat-label">粉丝</div>
+    <div class="stat-item">
+      <div class="stat-value">0</div>
+      <div class="stat-text">Followers</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-number">0</div>
-      <div class="stat-label">关注</div>
+    <div class="stat-item">
+      <div class="stat-value">0</div>
+      <div class="stat-text">Following</div>
     </div>
-  </section>
+  </div>
 
-  <!-- Repositories -->
-  <section class="repos-section">
-    <h2 class="section-title">
-      <!-- Repo Icon -->
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-      项目仓库
-    </h2>
-
-    <!-- Repo Card: Leetcode_Hot100_Personalnote -->
-    <article class="repo-card">
-      <div class="repo-header">
-        <a class="repo-name" href="https://github.com/wwxyt/Leetcode_Hot100_Personalnote" target="_blank" rel="noopener">
-          <!-- Code Icon -->
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          Leetcode_Hot100_Personalnote
-        </a>
-        <span class="repo-badge badge-public">Public</span>
+  <!-- ───── My Repositories ───── -->
+  <section class="section anim-stagger-2">
+    <div class="section-heading">
+      <div class="section-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
       </div>
-      <p class="repo-desc">LeetCode Hot100 题目练习笔记 — ACM 风格训练的个人解题记录，包含思路分析与代码实现。</p>
-      <div class="repo-meta">
-        <span class="meta-item">
-          <!-- Star Icon -->
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <span class="section-label">项目仓库</span>
+      <span class="section-count">1 repo</span>
+    </div>
+
+    <article class="project-card">
+      <div class="card-top">
+        <div style="display:flex;align-items:center;flex:1;min-width:0;">
+          <div class="card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <a class="card-name" href="https://github.com/wwxyt/Leetcode_Hot100_Personalnote" target="_blank" rel="noopener">
+            Leetcode_Hot100_Personalnote
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+        <span class="card-badge badge-public">Public</span>
+      </div>
+      <p class="card-desc">LeetCode Hot100 题目练习笔记 — ACM 风格训练的个人解题记录，包含思路分析与代码实现。</p>
+      <div class="card-footer">
+        <span class="meta-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           0
         </span>
-        <span class="meta-item">
-          <!-- Fork Icon -->
+        <span class="meta-chip">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 9v2c0 .9.7 1.7 1.5 1.9L10 13.5"/><path d="M18 9v2a1.93 1.93 0 0 1-1.5 1.9L14 13.5"/></svg>
           0
         </span>
-        <span class="meta-item">
+        <span class="meta-chip">
           <span class="lang-dot lang-default"></span>
           Markdown &amp; Code
         </span>
@@ -410,10 +646,63 @@
     </article>
   </section>
 
-  <!-- Footer -->
-  <footer>
-    <p>Made with ❤️ · Powered by GitHub API</p>
-    <p style="margin-top: 6px;">© 2026 wwxyt</p>
+  <!-- ───── Interested Projects ───── -->
+  <section class="section anim-stagger-3">
+    <div class="section-heading">
+      <div class="section-icon" style="background: rgba(212,168,67,0.1);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--warm-gold);"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <span class="section-label">感兴趣的项目</span>
+    </div>
+
+    <article class="project-card interest">
+      <div class="card-top">
+        <div style="display:flex;align-items:center;flex:1;min-width:0;">
+          <div class="card-icon" style="background: rgba(232,116,122,0.1);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--warm-rose);"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+          <a class="card-name" href="https://github.com/vla-attack/tex3d" target="_blank" rel="noopener">
+            Tex3D
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+        <span class="card-badge badge-interest">Interesting</span>
+      </div>
+      <div class="tag-row">
+        <span class="tag">VLA</span>
+        <span class="tag">3D Texture</span>
+        <span class="tag">Adversarial Attack</span>
+        <span class="tag">Diff. Rendering</span>
+      </div>
+      <p class="card-desc">首个针对 Vision-Language-Action 模型的端到端对抗性 3D 纹理攻击框架。通过将对抗纹理优化到 3D 物体表面，在仿真与真实环境中实现物理可实现的攻击，OpenVLA 上最高可达 <strong style="color:var(--warm-coral)">96.7%</strong> 任务失败率。</p>
+      <div class="card-footer">
+        <span class="meta-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          16
+        </span>
+        <span class="meta-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 9v2c0 .9.7 1.7 1.5 1.9L10 13.5"/><path d="M18 9v2a1.93 1.93 0 0 1-1.5 1.9L14 13.5"/></svg>
+          4
+        </span>
+        <span class="meta-chip">
+          <span class="lang-dot lang-python"></span>
+          Python 85.8%
+        </span>
+        <span class="meta-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <a href="https://arxiv.org/abs/2604.01618" target="_blank" rel="noopener" style="color:var(--text-muted);text-decoration:none;">arXiv:2604.01618</a>
+        </span>
+      </div>
+    </article>
+  </section>
+
+  <!-- ───── Footer ───── -->
+  <footer class="site-footer">
+    <div class="footer-divider"></div>
+    <p class="footer-text">
+      Made with <span style="color:var(--warm-rose)">&#9829;</span> &middot; Powered by GitHub API
+    </p>
+    <p class="footer-text" style="margin-top: 4px;">&copy; 2026 wwxyt</p>
   </footer>
 
 </div>
